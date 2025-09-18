@@ -1,6 +1,9 @@
 name: 'Destroy Azure Infrastructure'
 
 on:
+  push:
+    branches:
+      - destroy-infrastructure
   workflow_dispatch:
     inputs:
       confirm_destroy:
