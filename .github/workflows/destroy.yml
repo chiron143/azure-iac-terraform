@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - destroy-infrastructure
+      - force-destroy-infrastructure
 
 env:
   TF_VERSION: '1.6.0'
