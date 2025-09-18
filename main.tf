@@ -64,13 +64,13 @@ resource "azurerm_subnet" "webapp" {
   }
 }
 
-# App Service Plan - FREE TIER
+# App Service Plan - BASIC TIER for VNet Integration
 resource "azurerm_service_plan" "main" {
   name                = "asp-secure-webapp"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   os_type             = "Linux"
-  sku_name            = "F1"  # FREE TIER instead of B1
+  sku_name            = "B1"  # Changed back to B1 to support VNet integration
 
   tags = {
     Environment = "Test"
@@ -86,15 +86,12 @@ resource "azurerm_linux_web_app" "main" {
   service_plan_id     = azurerm_service_plan.main.id
 
   site_config {
-    always_on         = false
+    always_on         = true   # Can be enabled with B1 tier
     minimum_tls_version = "1.2"
     
     application_stack {
       node_version = "18-lts"
     }
-
-    # Add startup command to create HTML file
-    app_command_line = "echo '<!DOCTYPE html><html><head><title>Secure Azure Infrastructure</title><style>body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center}.container{background:rgba(255,255,255,0.1);padding:40px;border-radius:15px;backdrop-filter:blur(10px)}.checkmark{color:#4CAF50;font-size:1.2em}</style></head><body><div class=\"container\"><h1>🔒 Secure Azure Infrastructure</h1><p>Successfully deployed using Terraform and GitHub Actions</p><h2>Security Features:</h2><ul><li>✓ Private Virtual Network</li><li>✓ VNet Integration</li><li>✓ TLS 1.2 Enforcement</li><li>✓ Secure Storage Account</li></ul><p>Deployment Time: ' + new Date().toLocaleString() + '</p></div></body></html>' > /home/site/wwwroot/index.html && node server.js"
   }
 
   app_settings = {
@@ -108,7 +105,7 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
-# VNet Integration (may not work with F1, but we'll try)
+# VNet Integration - REQUIRED for exam
 resource "azurerm_app_service_virtual_network_swift_connection" "main" {
   app_service_id = azurerm_linux_web_app.main.id
   subnet_id      = azurerm_subnet.webapp.id
