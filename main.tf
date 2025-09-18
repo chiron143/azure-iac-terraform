@@ -92,6 +92,8 @@ resource "azurerm_linux_web_app" "main" {
     application_stack {
       node_version = "18-lts"
     }
+
+    app_command_line = "echo '<!DOCTYPE html><html><head><title>Secure Infrastructure</title></head><body><h1>Azure Infrastructure Deployed Successfully</h1><p>VNet Integration: Active</p><p>Region: Central India</p><p>Deployed via: Terraform + GitHub Actions</p></body></html>' > /home/site/wwwroot/index.html && npm start"
   }
 
   app_settings = {
