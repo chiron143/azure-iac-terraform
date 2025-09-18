@@ -18,7 +18,7 @@ provider "azurerm" {
 
 # Resource Group
 resource "azurerm_resource_group" "main" {
-  name     = "rg-azure-iac-terraform-test"
+  name     = "rg-azure-iac-terraform-demo"
   location = "Central India"
 
   tags = {
