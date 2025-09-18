@@ -97,6 +97,8 @@ resource "azurerm_linux_web_app" "main" {
   app_settings = {
     "WEBSITE_NODE_DEFAULT_VERSION" = "18-lts"
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "false"
+    "WEBSITE_RUN_FROM_PACKAGE" = "0"
+    "POST_BUILD_SCRIPT_PATH" = "echo '<!DOCTYPE html><html><head><title>Secure Azure Infrastructure</title></head><body><h1>Azure Infrastructure Deployed</h1><p>VNet Integration: Active</p><p>Location: Central India</p></body></html>' > /home/site/wwwroot/index.html"
   }
 
   tags = {
