@@ -1,3 +1,3 @@
 # azure-iac-terraform
 
-td gg
+td gg ez
