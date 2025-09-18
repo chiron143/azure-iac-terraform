@@ -4,12 +4,6 @@ on:
   push:
     branches:
       - destroy-infrastructure
-  workflow_dispatch:
-    inputs:
-      confirm_destroy:
-        description: 'Type "destroy" to confirm infrastructure destruction'
-        required: true
-        default: ''
 
 env:
   TF_VERSION: '1.6.0'
@@ -18,7 +12,6 @@ jobs:
   destroy:
     name: 'Terraform Destroy'
     runs-on: ubuntu-latest
-    if: github.event.inputs.confirm_destroy == 'destroy'
 
     steps:
     - name: Checkout
